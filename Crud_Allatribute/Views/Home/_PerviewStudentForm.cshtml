@@ -1,0 +1,137 @@
+﻿@model List<ViewModelLayer.StudentSectionDto>
+@using Enums;
+<style>
+    .requiredfield-icon-position {
+        vertical-align: super;
+    }
+
+    .TopDiv hr {
+    }
+
+    #HeaderPreviewEditor img {
+        max-width: 100%;
+    }
+
+    .section_Name {
+        font-weight: 600;
+        text-align: left;
+    }
+
+    .studentInfo_Sections {
+        font-weight: 600;
+        padding: 8px;
+        background: #eff3f8;
+        border-left: 2px solid #1271c4;
+        margin-bottom: 22px;
+        text-align: left;
+        font-size: 16px;
+    }
+
+    .form-group .col-md-12 label.control-label {
+        font-weight: 600;
+    }
+
+    .ctx-Display-Block {
+        display: block;
+    }
+
+    #PoliciesandAgreement fieldset {
+        border: 0;
+        line-height: 1.8;
+    }
+
+    .form-group .col-md-12 .input-group.ctx-Display-Block .form-control {
+        height: 38px;
+        padding: 6px 10px;
+        border-radius: 3px !important;
+    }
+
+    #HeaderPreviewEditor p, #FooterPreviewEditor p {
+        text-align: center;
+    }
+
+    .labelView {
+        padding-left: 6px;
+    }
+
+    .modal-header h4 {
+        padding: 0px !important;
+    }
+
+    #franchiseEnrollmentForm .panel label .control-label {
+        white-space: normal;
+        padding-left: 20px;
+    }
+
+    #franchiseEnrollmentForm .panel label .check-field {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+    }
+
+    .checkBoxElementStyle {
+        display: flex;
+        padding-bottom: 10px;
+        align-items: center;
+    }
+
+        .checkBoxElementStyle input {
+            margin: 8px 6px 0 0;
+        }
+
+    span.error {
+        color: red !important;
+        border: none !important;
+    }
+
+    .empty-validation {
+        display: inline-block;
+    }
+
+    #Phone_Number.error {
+        border: 1px solid red !important;
+        background-color: #fee !important;
+    }
+
+    #EducationTable_wrapper.dataTables_wrapper.dataTables_extended_wrapper {
+        width: 100%;
+    }
+</style>
+
+@foreach (var item in Model)
+{
+    if (item.SectionType == (int)BacklogFormAttributesEnums.StudentEnrollmentSection.Header)
+    {
+        <h4 class="studentInfo_Sections ar-flex-wrap ar-border-right-2 ar-border-left-0"><span style="color:#1271c4 !important;">@item.SectionName</span></h4>
+    }
+    else if (item.SectionType == (int)BacklogFormAttributesEnums.StudentEnrollmentSection.Footer)
+    {
+        <h4 class="studentInfo_Sections ar-flex-wrap ar-border-right-2 ar-border-left-0"><span style="color:#1271c4 !important;">@item.SectionName</span></h4>
+    }
+    else if (item.SectionType == (int)BacklogFormAttributesEnums.StudentEnrollmentSection.FranchiseEducationalDetails)
+    {
+        <h4 class="studentInfo_Sections ar-flex-wrap ar-border-right-2 ar-border-left-0"><span style="color:#1271c4 !important;">@item.SectionName</span></h4>
+    }
+    else if (item.SectionType == (int)BacklogFormAttributesEnums.StudentEnrollmentSection.FranchiseElectronicSignature)
+    {
+        <h4 class="studentInfo_Sections ar-flex-wrap ar-border-right-2 ar-border-left-0"><span style="color:#1271c4 !important;">@item.SectionName</span></h4>
+    }
+    else if (item.SectionType == (int)BacklogFormAttributesEnums.StudentEnrollmentSection.FranchiseEmploymentDetails)
+    {
+        <h4 class="studentInfo_Sections ar-flex-wrap ar-border-right-2 ar-border-left-0"><span style="color:#1271c4 !important;">@item.SectionName</span></h4>
+    }
+    else if (item.SectionType == (int)BacklogFormAttributesEnums.StudentEnrollmentSection.FranchisePersonalDetails)
+    {
+        <h4 class="studentInfo_Sections ar-flex-wrap ar-border-right-2 ar-border-left-0"><span style="color:#1271c4 !important;">@item.SectionName</span></h4>
+        @Html.Partial("~/Views/Home/_PerviewStudentElements.cshtml",item.StudentFormDetails)
+    }
+    else if (item.SectionType == (int)BacklogFormAttributesEnums.StudentEnrollmentSection.FranchiseSetupDetails)
+    {
+        <h4 class="studentInfo_Sections ar-flex-wrap ar-border-right-2 ar-border-left-0"><span style="color:#1271c4 !important;">@item.SectionName</span></h4>
+    }
+    else
+    {
+        <h4 class="studentInfo_Sections ar-flex-wrap ar-border-right-2 ar-border-left-0"><span style="color:#1271c4 !important;">@item.SectionName</span></h4>
+    }
+
+}

@@ -1,0 +1,256 @@
+﻿@model List<DataLayer.cmatrix_contact_form_template_details>
+
+@{
+    ViewBag.Title = "FormSetup";
+}
+
+<h2>FormSetup</h2>
+<style>
+    .toggle_fieldset {
+        border: none;
+        /*padding: 1rem 0;*/
+        /*min-height: 40px;*/
+        float: left;
+    }
+
+        .toggle_fieldset:focus {
+            outline: none;
+        }
+
+    .toggle-check span em[class^="tc-"] {
+        position: absolute !important;
+        height: 1px;
+        width: 1px;
+        border: 0;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(1px, 1px, 1px, 1px);
+    }
+
+    .toggle-check span em.tc-on {
+        display: none;
+    }
+
+    .toggle-check label {
+        cursor: pointer;
+    }
+
+    .toggle-check input[type="checkbox"] {
+        vertical-align: middle;
+        margin-right: 4.5rem;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+    }
+
+        .toggle-check input[type="checkbox"] + span {
+            position: relative;
+            vertical-align: middle;
+            line-height: normal;
+            font-size: 14px;
+        }
+
+    input[type="checkbox"]:checked + span em.tc-on {
+        display: inline-block;
+    }
+
+    input[type="checkbox"]:checked + span em.tc-off {
+        display: none;
+    }
+
+    .toggle-check input[type="checkbox"] + span:before {
+        content: " ";
+        text-align: center;
+        width: 3.25rem;
+        height: 1.5rem;
+        background-color: #DFE6EB;
+        border: 1px solid #87919b;
+        border-radius: 1rem;
+        position: absolute;
+        z-index: 1;
+        top: -.2rem;
+        left: -4.5rem;
+        transition: background-color .3s;
+    }
+
+    .toggle-check input[type="checkbox"]:checked + span:before {
+        border-color: #125084;
+        background-color: #a0caee;
+    }
+
+    .toggle-check input[type="checkbox"] + span:after {
+        content: " ";
+        text-align: center;
+        width: 1.5rem;
+        height: 1.5rem;
+        background-color: #FFF;
+        border-radius: 1rem;
+        position: absolute;
+        z-index: 10;
+        top: -.15rem;
+        left: -4.4rem;
+        box-shadow: 3px 0px 2px #bbb;
+        -moz-box-shadow: none;
+        transition: left .3s;
+    }
+
+    .toggle-check input[type="checkbox"]:checked + span:after {
+        left: -2.8rem;
+        box-shadow: -3px 0px 2px #125084;
+    }
+    /* Oversized */
+    .toggle-check.oversized input[type="checkbox"] + span:before {
+        height: 1rem;
+        top: 1px;
+        box-shadow: none;
+        border: none;
+    }
+
+    .toggle-check.large.oversized input[type="checkbox"] + span:before {
+        height: 1.25rem;
+        top: 2px;
+    }
+
+    .toggle-check.oversized input[type="checkbox"] + span:after {
+        background-color: #87919b;
+        box-shadow: none;
+        border: none;
+    }
+
+    .toggle-check.oversized input[type="checkbox"]:checked + span:after {
+        background-color: #125084;
+    }
+
+    .toggle-check.secondary.oversized input[type="checkbox"]:checked + span:after {
+        background-color: #ae2747;
+        box-shadow: none;
+        border: none;
+    }
+
+    .toggle-check.oversized input[type="checkbox"] + span:after {
+        width: 17px;
+        height: 17px;
+        top: -3px;
+    }
+
+
+    .toggle-check.oversized label {
+        max-width: 50px;
+        display: flex;
+    }
+
+
+    .toggle-check.oversized input[type="checkbox"] + span:before {
+        height: 8px;
+        width: 35px;
+        top: 2px;
+    }
+
+    .toggle-check.oversized input[type="checkbox"] + span:after {
+        width: 17px;
+        height: 17px;
+        top: -3px;
+    }
+
+    #ContactTemplateTable span.ctxicon-draggable {
+        padding: 5px;
+        position: relative;
+        left: 1px;
+        color: #92969a;
+        display: none;
+        cursor: -webkit-grab;
+        z-index: 3;
+        top: auto;
+    }
+
+    tr.ui-sortable-handle:hover span.ctxicon-draggable {
+        display: inline-block !important;
+    }
+
+    #ContactTemplateTable .ui-sortable-helper .fa.fa-pencil {
+        position: absolute !important;
+        right: 18% !important;
+        top: 40%;
+    }
+</style>
+<table class="table tabbable-bordered">
+    <thead>
+        <tr>
+            <td>
+                Feild Name
+            </td>
+            <td>
+                Action
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr row-id="@item.ccftd_key" class="dbl-clickable-row">
+                <td class="hover-active">
+                    <span class="ctxicon-draggable"></span>
+                    <span class="grid-openPopup-Link">@item.ccftd_field_name</span>
+                </td>
+
+                <td>
+                    @if (item.ccftd_is_default == true)
+                    {
+                        <a title="Edit Field" style="margin-left:5px" class="fa fa-pencil theme-font" data-attr="@item.ccftd_attr_type" data-toggle="modal" onclick="ContactForm.EditContactField('@item.ccftd_key',0,'',@item.ccftd_tab_type)">Edit</a>
+                    }
+                    else
+                    {
+                        if (item.ccftd_is_active == true)
+                        {
+                            <fieldset class="toggle_fieldset toggle-check oversized " sort-id="@item.ccftd_key" tabindex="0">
+                                <label>
+                                    <input name="theme" type="checkbox" checked id="@item.ccftd_key" onchange="ContactFormTemplate.HideShowContactField('@item.ccftd_key')">
+                                    <span>
+                                        <em class="tc-on">- On</em>
+                                        <em class="tc-off">- Off</em>
+                                    </span>
+                                </label>
+                            </fieldset>
+
+                        }
+                        else
+                        {
+                            <fieldset class="toggle_fieldset toggle-check oversized " sort-id="@item.ccftd_key" tabindex="0">
+                                <label>
+                                    <input name="theme" type="checkbox" id="@item.ccftd_key" onchange="ContactFormTemplate.HideShowContactField('@item.ccftd_key')">
+                                    <span>
+                                        <em class="tc-on">- On</em>
+                                        <em class="tc-off">- Off</em>
+                                    </span>
+                                </label>
+                            </fieldset>
+                        }
+                        <a title="Edit Field" class="fa fa-pencil theme-font" data-toggle="modal" data-attr="@item.ccftd_attr_type" onclick="ContactForm.EditContactField('@item.ccftd_key',0,'',@item.ccftd_tab_type)">Edit</a>
+                    }
+                    @if (item.ccftd_is_default == false)
+                    {
+                        <a title="Delete Field" onclick="ContactFormTemplate.DeleteContactField('@item.ccftd_key')" class="fa fa-trash-o theme-font">Delete</a>
+
+                    }
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<script src="~/Scripts/ContactForm.js"></script>
+<div id="containerformtemplate">
+
+</div>
+<script>
+
+</script>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="showData">
+
+        </div>
+    </div>
+</div>

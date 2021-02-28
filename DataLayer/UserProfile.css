@@ -1,0 +1,36 @@
+﻿.user-profile-image {
+    border: 1px,solid #808080;
+    border-radius: 3px;
+}
+.user-profile-image img{
+    height: 300px;
+   cursor:pointer;
+}
+
+    .user-profile-image .upload-photo {
+        background-color: #242424;
+        opacity: 0.4;
+        width: 92%;
+        height: 50px;
+        position: absolute;
+        bottom:0;
+        left: 15px;
+    }
+    .user-profile-image .upload-photo img{
+       
+       
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        bottom: 0;
+        top: 7px;
+        left:70px;
+    }
+
+.removePhoto{
+    position:absolute;
+    top:0;
+    right:15px;
+    border:2px solid #ddd;
+    padding:15px;
+}

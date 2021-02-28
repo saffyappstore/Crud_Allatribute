@@ -1,0 +1,73 @@
+﻿@model IEnumerable<ViewModelLayer.StudentFormDetails>
+@using Enums;
+
+@{
+    var isBreak = false;
+}
+
+@if (Model != null && Model.Count() > 0)
+{
+
+    for (int i = 0; i < Model.Count(); i++)
+    {
+        if (isBreak)
+        {
+            isBreak = false;
+            continue;
+        }
+
+        var labelClass = "control-label";
+        var labelClassNextElement = "control-label";
+        var fieldClass = "col-md-12";
+        var elementClass = "col-md-6";
+
+        var divLabelClass = "col-md-12";
+        var divLabelClassNextElement = "col-md-12";
+        var requiredClass = "";
+        var requiredClassNextElement = "";
+        if (Model.ElementAt(i).Colspan == 2)
+        {
+            labelClass = "control-label";
+            elementClass = "col-md-12";
+            fieldClass = "col-md-12";
+            divLabelClass = "col-md-12";
+        }
+
+        var FieldLable = Html.Raw(Model.ElementAt(i).FieldName);
+
+        if (Model.ElementAt(i).IsRequired)
+        {
+            requiredClass = "requiredfield";
+        }
+
+        if (Model.ElementAt(i).Colspan == 1)
+        {
+    <div class="row">
+        @switch (Model.ElementAt(i).attributeType)
+        {
+            case (int)BacklogFormAttributesEnums.AttributeType.Checkbox:
+                var cb = Model.ElementAt(i);
+                <div class="col-md-6">
+                    <label>@FieldLable</label>
+                    @Html.Partial("~/Views/Home/_StudentElements.cshtml", Model.ElementAt(i))
+                </div>
+                            break;
+                        default:
+                <div class="col-md-6">
+                    <label>@FieldLable</label>
+                    @Html.Partial("~/Views/Home/_StudentElements.cshtml", Model.ElementAt(i))
+                </div>
+                break;
+        }
+
+    </div>
+
+}
+if (Model.ElementAt(i).Colspan == 2)
+{<p>cols span 2</p>
+    <label>@FieldLable</label>
+    @Html.Partial("~/Views/Home/_StudentElements.cshtml", Model.ElementAt(i))
+}
+
+}
+}

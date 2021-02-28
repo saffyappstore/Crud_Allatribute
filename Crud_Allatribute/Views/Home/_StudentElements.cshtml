@@ -1,0 +1,10 @@
+﻿@model ViewModelLayer.StudentFormDetails
+    @using Enums;
+    @switch (Model.attributeType)
+    {
+       case (int)BacklogFormAttributesEnums.AttributeType.Text:
+            @Html.TextBox(Model.FieldName,Model.FieldValue,new { @class = "form-control",@placeholder=Model.FieldPlaceholder })
+            break;
+        default:
+            break;
+    }

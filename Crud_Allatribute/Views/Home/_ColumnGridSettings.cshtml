@@ -1,0 +1,300 @@
+﻿@model ViewModelLayer.ColumnGridDetailsDto
+    <style>
+        #select-from {
+            width: 217px;
+            height: 237px;
+        }
+
+        #LeftRight {
+            margin-left: 33px;
+            margin-top: 83px;
+        }
+
+        #select-to {
+            width: 217px;
+            height: 237px;
+        }
+
+        #Width {
+            margin-top: 171px;
+            margin-right: 7px;
+        }
+
+        #WidthText {
+            width: 45px;
+        }
+
+        #btn-up {
+            margin-top: -173px;
+        }
+
+        #btn-down {
+            margin-top: -144px;
+        }
+
+        .scrollbarproperty::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+
+        #LeftRight > a.btn i.fa, #Width > a.btn i.fa {
+            position: relative;
+            top: -2px;
+        }
+
+        #btn-add {
+            margin-top: 2px;
+        }
+    </style>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="AddRemoveUserNewColumnsModal">
+                <div class="row">
+
+                    <div class="col-md-1" id="Width">
+                        <a id="btn-up" class="btn ctx-btn-circle btn-icon-only"><i class="fa fa-angle-double-up Size-font" aria-hidden="true"></i>Up</a><br>
+                        <a id="btn-down" class="btn ctx-btn-circle btn-icon-only"><i class="fa fa-angle-double-down Size-font" aria-hidden="true">Down</i></a>
+                        <span>Width</span>
+                        <input type="number" id="WidthText" />
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+
+                            <input type="hidden" value="@ViewBag.TableName" id="tableHiddenName" />
+                            <input type="hidden" value="@ViewBag.ModalFor" id="modalForHidden" />
+                           
+                            <h5>Show Column </h5>
+                            <select name="selectto" class="Lister scrollbarproperty" id="select-to" @*multiple*@ size="5">
+                                @{
+                                    foreach (var visibleColumns in Model.visibleColumns)
+                                    {
+                                                                                 
+                                   <option value=@visibleColumns.ColumnId data-width="@visibleColumns.ColumnWidth" data-order="" data-name="@visibleColumns.ColumnText" data-default-col-id="@visibleColumns.ColumnId">@visibleColumns.ColumnText</option>
+                                           
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-1" id="LeftRight">
+
+                        <a href="JavaScript:void(0);" id="btn-remove" class="btn ctx-btn-circle btn-icon-only"><i class="fa fa-angle-double-right" aria-hidden="true"></i>>></a>
+                        <a href="JavaScript:void(0);" id="btn-add" class="btn ctx-btn-circle btn-icon-only"> <i class="fa fa-angle-double-left" aria-hidden="true"></i><<</a>
+                    </div>
+                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;Hidden col </h5>
+                    <div class="col-md-4">
+                        <select name="selectfrom" class="Lister scrollbarproperty" id="select-from" @*multiple*@ size="5">
+
+                            @{
+                                foreach (var visibleColumns in Model.hiddenColumns)
+                                {
+
+                                    <option value=@visibleColumns.ColumnId data-width="@visibleColumns.ColumnWidth" data-order="" data-name="@visibleColumns.ColumnText" data-default-col-id="@visibleColumns.ColumnId">@visibleColumns.ColumnText</option>
+
+                                }
+                            }
+
+                        </select>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="restoreSettings"> Restore To default</button>
+                    <button type="button" class="btn btn-default" id="saveConfigSettings" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn grey-mint btn-outline" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+       
+<script>
+   
+      $('#btn-add').on("click", function () {
+            $('#select-from option:selected').each(function () {
+                $('#select-to').append("<option value='" + $(this).val() + "'  data-width='" + $(this).attr("data-width") + "'  data-order='" + $(this).attr("data-order") + "' data-name='" + $(this).attr("data-name") + "' data-default-col-id='" + $(this).attr("data-default-col-id") + "'>" + $(this).text() + "</option>");
+                $(this).remove();
+                var newPos = $('#select-to option:last').index() - 1;
+                var item = $('#select-to option:last');
+                if (newPos > -1) {
+                    $('#select-to option').eq(newPos).before("<option value='" + item.val() + "' selected='selected' data-name='" + item.attr("data-name") + "'  data-width='" + item.attr("data-width") + "'  data-order='" + item.attr("data-order") + "' data-default-col-id='" + item.attr("data-default-col-id") + "'>" + item.text() + "</option>");
+                    item.remove();
+                }
+            });
+      });
+
+    $('#btn-remove').on("click", function () {
+        debugger
+        if (selectedOptionDefaultId != undefined) {
+
+            var tableName = $("#tableHiddenName").val();
+            if (selectOptionText == "Action") {
+                alert();
+                return false;
+            }
+
+            $.get("/Home/CheckColumnMandatory", { ColumnId: selectedOptionDefaultId, TableName: tableName, }, function (result) {
+                if (result == true) {
+                    alert("column mandatory");
+                }
+                else {
+                    $("#select-to option:selected").each(function () {
+                        $('#select-from').append("<option value='" + $(this).val() + "'  data-width='" + $(this).attr("data-width") + "'  data-order='" + $(this).attr("data-order") + "' data-name='" + $(this).attr("data-name") + "' data-default-col-id='" + $(this).attr("data-default-col-id") + "'>" + $(this).text() + "</option>");
+                        $(this).remove();
+                    });
+                }
+
+            });
+        }
+    });
+      $('#btn-up').on('click', function () {
+            if ($('#select-to option:selected').text() == "Action" || $('#select-to option:selected').text() == "Actions") { showToaster({ title: "Error:", msg: "You Can not sort Action column.", priority: "error" }); }
+            else {
+                $('#select-to option:selected').each(function () {
+                    var newPos = $('#select-to option').index(this) - 1;
+                    if (newPos > -1) {
+                        $('#select-to option').eq(newPos).before("<option value='" + $(this).val() + "' selected='selected' data-name='" + $(this).attr("data-name") + "'  data-width='" + $(this).attr("data-width") + "'  data-order='" + $(this).attr("data-order") + "' data-default-col-id='" + $(this).attr("data-default-col-id") + "'>" + $(this).text() + "</option>");
+                        $(this).remove();
+                    }
+                });
+            }
+        });
+
+        $('#btn-down').on('click', function () {
+            
+            var countOptions = $('#select-to option').size();
+            $('#select-to option:selected').each(function () {
+                var newPos = $('#select-to option').index(this) + 1;
+                if (newPos < countOptions) {
+                    if ($('#select-to option').eq(newPos).text() == "Action" || $('#select-to option').eq(newPos).text() == "Actions") {
+                        showToaster({ title: "Error:", msg: "You Can not sort Action column.", priority: "error" });
+                    } else {
+                        $('#select-to option').eq(newPos).after("<option value='" + $(this).val() + "' selected='selected' data-name='" + $(this).attr("data-name") + "' data-width='" + $(this).attr("data-width") + "'  data-order='" + $(this).attr("data-order") + "' data-default-col-id='" + $(this).attr("data-default-col-id") + "'>" + $(this).text() + "</option>");
+                        $(this).remove();
+                    }
+                }
+            });
+        });
+
+
+    var select_to = $("#select-to");
+        var select_from = $("#select-from");
+
+        var selectedOptionValue;
+        var selectedOptionWidth;
+        var selectedOptionDefaultId;
+        $(document).on('change', '#select-from', function () {
+            for (i = 0; i < select_to.get(0).length; i++) {
+                select_to.get(0)[i].selected = false;
+            }
+
+        });
+
+        $(document).on('change', '#select-to', function () {
+            selectedOptionWidth = $('#select-to option:selected').attr('data-width');
+            selectedOptionValue = $("#select-to option:selected").val();
+            selectedOptionDefaultId = $("#select-to option:selected").attr("data-default-col-id");
+            selectOptionText = $("#select-to option:selected").text().trim();
+            $('#WidthText').val(selectedOptionWidth).focus();
+        });
+
+     $("#WidthText").on("change", function () {
+            debugger
+            var value = $(this).val();
+            var tableName = $("#tableHiddenName").val();
+            if (selectedOptionDefaultId === undefined) {
+                return;
+            }
+            $.get("/Home/CheckMinWidth", { ColumnId: selectedOptionDefaultId, TableName: tableName, ColumnWidth: value }, function (result) {
+                 
+                     if (result.Key == false) {
+                    $('#WidthText').val(selectedOptionWidth);
+                    $('#select-to option:selected').attr('data-width', selectedOptionWidth);
+
+                    showToaster({ title: "Error:", msg: "Minimum width is set to " + result.Value + " pixels", priority: "error" });
+                }
+                else {
+                    $("#select-to option[value=" + selectedOptionValue + "]").attr("data-width", value);
+                    $('#select-to option:selected').focus();
+                }
+                
+               
+            });
+        });
+     $("#saveConfigSettings").on("click", function () {
+            debugger
+            var hiddenColumns = [];
+            var visibleColumns = [];
+            var columnOrder = 1;
+            $("#select-to option").each(function () {
+                visibleColumns.push({
+                    ColumnId: $(this).val(),
+                    ColumnText: $.trim($(this).text()),
+                    Orderby: columnOrder,
+                    ColumnWidth: $(this).attr("data-width"),
+                });
+                columnOrder = columnOrder + 1;
+            });
+
+            $("#select-from option").each(function () {
+                hiddenColumns.push({
+                    ColumnId: $(this).val(),
+                    ColumnText: $.trim($(this).text()),
+                    Orderby: columnOrder,
+                    ColumnWidth: $(this).attr("data-width")
+                });
+                columnOrder = columnOrder + 1;
+
+            });
+
+            var ColumnGridDetailsDto = {
+                visibleColumns: visibleColumns,
+                hiddenColumns: hiddenColumns
+            };
+
+            var tableName = $("#tableHiddenName").val();
+
+         $.post("/Home/SaveUpdateGridSettings", { GridInfo: ColumnGridDetailsDto, TableName: tableName }, function (data) {
+
+             if (data) {
+
+                 var modalFor = $("#modalForHidden").val();
+                 if (modalFor == "_User") {
+                     $.get("/Home/UserDynamicGrid", function (data, status) {
+                         $('#reloadtable').html(data);
+                         alert("successfully updated");
+                     });
+                   //$('#reloadtable').load('/Home/UserDynamicGrid');
+
+                 }
+             }
+         });
+     });
+
+
+    $("#restoreSettings").on("click", function () {
+            var tableName = $("#tableHiddenName").val();
+            $.post("/Home/RestoreGrid", { TableName: tableName }, function (data) {
+                $("#select-to").empty();
+                $.each(data.visibleColumns, function (i, item) {
+                    
+                 $("#select-to").append("<option value=" + item.ColumnId + " data-width=" + item.ColumnWidth + " data-order=" + item.OrderBy + " data-default-col-id='" + item.ColumnId + "'>" + item.ColumnText + "</option>");
+                    
+                });
+
+                $("#select-from").empty();
+                $.each(data.hiddenColumns, function (i, item) {
+                   
+                 $("#select-from").append("<option value=" + item.ColumnId + " data-width=" + item.ColumnWidth + " data-order=" + item.ColumnOrder + " data-default-col-id='" + item.DefaultColumnId + "' data-name=" + item.ColumnName + ">" + item.ColumnNameText + "</option>");                   
+
+                });
+
+                $("#WidthText").val("");
+
+
+            });
+        });
+
+</script>

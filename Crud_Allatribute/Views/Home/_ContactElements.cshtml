@@ -1,0 +1,52 @@
+﻿@model ViewModelLayer.ContactFormDetail
+@using Enums;
+
+
+@{
+
+    var requiredClass = "";
+    var autoComplete = "";
+    var Select = "Select";
+    if (Model.IsRequired)
+    {
+        requiredClass = "require";
+        Select = null;
+    }
+    var multipleClass = "";
+    if (Model.FieldClass == "MultiAuto")
+    {
+        multipleClass = "multiple";
+    }
+    if (Model.FieldClass == "Autocomplete")
+    {
+        autoComplete = "select2";
+    }
+}
+@switch (Model.attributeType)
+{
+    case (int)BacklogFormAttributesEnums.AttributeType.Text:
+        @Html.TextBox(Model.FieldName, Model.FieldValue, new { @class = "form-control text-field max-len  sp-char " + requiredClass, @autocomplete = "off", @placeholder = Model.FieldPlaceholder, data_Name = Model.FieldName, data_id = Model.FormDetailId, data_ColumnName = Model.ColumnName, data_error_msg = Model.FieldErrorMessage, @maxlength = "700" });
+        break;
+
+    case (int)BacklogFormAttributesEnums.AttributeType.Email:
+        @Html.TextBox(Model.FieldName, Model.FieldValue, new { type = "email", @class = "form-control text-field " + requiredClass, @autocomplete = "off", @placeholder = Model.FieldPlaceholder, data_Name = Model.FieldName, data_id = Model.FormDetailId, data_ColumnName = Model.ColumnName, data_error_msg = Model.FieldErrorMessage, @maxlength = "700" });
+        break;
+
+    case (int)BacklogFormAttributesEnums.AttributeType.Editor:
+        @Html.TextBox(Model.FieldName, Model.FieldValue, new { type = "textarea", @class = "form-control text-field " + requiredClass, @autocomplete = "off", @placeholder = Model.FieldPlaceholder, data_Name = Model.FieldName, data_id = Model.FormDetailId, data_ColumnName = Model.ColumnName, data_error_msg = Model.FieldErrorMessage, @maxlength = "700" });
+        break;
+    case (int)BacklogFormAttributesEnums.AttributeType.DropdownCustomList:
+        int values = 0;
+        if (!String.IsNullOrEmpty(Model.FieldValue))
+        {
+            values = Convert.ToInt32(Model.FieldValue);
+        }
+        SelectList list;
+        list = new SelectList(Model.OptionsList, "OptionId", "Option", values);
+        @Html.DropDownList(Model.FieldName, list, Select, new { @id = "select" + Model.FormDetailId, @class = "form-control dropdown-field " + requiredClass + " " + Model.FieldClass, @autocomplete = "off", @placeholder = Model.FieldName, data_dropdownType = Model.FieldClass, data_id = Model.FormDetailId, data_error_msg = Model.FieldErrorMessage, data_formDataId = Model.FormDataId, data_is_shown = Model.IsActive, })
+
+        break;
+
+
+}
+

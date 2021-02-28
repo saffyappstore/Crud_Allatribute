@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/multi-select.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+    @*<link href="~/Content/DataTables/css/dataTables.jqueryui.css" rel="stylesheet" />*@
+    <link href="~/Scripts/global/plugins/datatables/datatables.min.css" rel="stylesheet" />
+    <link href="~/Scripts/global/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <script src="~/Scripts/global/plugins/jquery.min.js"></script>
+    @*<script src="~/Scripts/jquery-3.4.1.js"></script>*@
+    <script src="~/Scripts/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    @*<script src="~/Scripts/DataTables/jquery.dataTables.js" defer></script>*@
+    <script src="~/Scripts/global/plugins/datatables/datatables.js"></script>
+    <script src="~/Scripts/global/plugins/datatables/datatables.all.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+
+
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/Base.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("List", "List", "Home")</li>
+                    <li>@Html.ActionLink("Add", "UserProfile", "Home")</li>
+                    <li>@Html.ActionLink("DynamicGrid", "DynamicTable", "Home")</li>
+                    <li>@Html.ActionLink("ContactEnrollmentForm", "ContactEnrollmentForm", "Home")</li>
+                    <li>@Html.ActionLink("Contact Form Setup", "FormSetup", "Home")</li>
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+
+
+
+
+
+    <script>
+        /* File Created: January 16, 2012 */
+
+        // V
+        $('.multiselect').multiselect({
+            enableFiltering: true,
+            rebuild: true,
+            includeSelectAllOption: true,
+            selectAllText: ' Select All',
+            nonSelectedText: 'No Items Selected',
+            nSelectedText: 'Items Selected',
+            allSelectedText: 'All Selected',
+            selectAllNumber: true,
+            autoBlur: true,
+            closeOnSelect: true
+        });
+        $(function () {
+            //upload image
+            $("#UploadImage").click(function () {
+                $("#inputUploadFile").trigger('click');
+            });
+            //upload and see
+
+
+            $("#inputUploadFile").change(function () {
+                if (this.files && this.files[0]) {
+                    var filereader = new FileReader();
+                    filereader.readAsDataURL(this.files[0]);
+                    filereader.onload = function (x) {
+                        $("#UploadImage").attr("src", x.target.result);
+                        //var image = new Image;
+                        //image.src = x.target.result;
+                        //image.onload = function () {
+                        //    var width = this.width;
+                        //    var height = this.height;
+                        //    var type = x.type;
+                        //    if ((width == "3500" && height == "2933") && (type == "image/png" || type=="image/jpeg")) {
+                        //        $("#UploadImage").attr("src", x.target.result);
+                        //         ('.imagedes').css('color', "black");
+                        //    }
+                        //    else {
+                        //        $('.imagedes').css('color', "red");
+                        //    }
+                        //}
+
+                    }
+                }
+            });
+            //remove image
+            $(".removePhoto").click(function () {
+                $("#UploadImage").attr("src", "/no-image-available-icon.jpg");
+                $("#ImagePath").val('/no-image-available-icon.jpg');
+            });
+            //alue is the element to be validated, params is the array of name/value pairs of the parameters extracted from the HTML, element is the HTML element that the validator is attached to
+
+
+
+            //  $.validator.unobtrusive.adapters.add('restrictbackdates', ['mindate'], function (options) {
+            //        options.rules['restrictbackdates'] = { mindate: options.params.mindate };
+            //        options.messages['restrictbackdates'] = options.message;
+            //    });
+
+            //$.validator.addMethod("restrictbackdates", function (value, element, param) {
+            //    debugger
+            //    var date = new Date(value);
+            //    var minDate = new Date(param.mindate);
+            //    return date >= minDate;
+            //});
+
+
+
+        });
+            ////for date validation last date greater than start
+            //$.validator.unobtrusive.adapters.add("dategreaterthan", ["otherpropertyname"], function (options) {
+            //    options.rules["dategreaterthan"] = "#" + options.params.otherpropertyname;
+            //    options.messages["dategreaterthan"] = options.message;
+            //});
+            //$.validator.addMethod("dategreaterthan", function (value, element, params) {
+            //    return Date.parse(value) > Date.parse($(params).val());
+            //});
+            //for multiple string list
+            //$.validator.unobtrusive.adapters.add("stringlist", ["otherpropertyname"], function (options) {
+            //    debugger
+            //    options.rules["stringlist"] = "#" + options.params.otherpropertyname;
+            //    options.messages["stringlist"] = options.message;
+            //});
+            //$.validator.addMethod("stringlist", function (value, element, params) {
+            //    debugger
+            //    return Date.parse(value) > Date.parse($(params).val());
+            //});
+
+                         //$.validator.addMethod('lengthonotherpropertyvalue', function (value, element, params) {
+                         //           debugger
+                         //           var propertyValue = $('#' + params.nametocheck).val();
+                         //           if (propertyValue === params.valuetocheck && value.length > params.maxlengthonmatch)
+                         //               return false;
+                         //           if (propertyValue !== params.valuetocheck && value.length > params.maxlength)
+                         //               return false;
+                         //           return true;
+                         //       });
+                                //jQuery.validator.unobtrusive.adapters.add('lengthonotherpropertyvalue',
+                                //    ['nametocheck', 'valuetocheck', 'maxlength', 'maxlengthonmatch'],
+                                //    function (options) {
+                                //        options.rules['lengthonotherpropertyvalue'] = {
+                                //            nametocheck:"#"+options.params.nametocheck,
+                                //            //valuetocheck: options.params.valuetocheck,
+                                //            //maxlength: options.params.maxlength,
+                                //            //maxlengthonmatch: options.params.maxlengthonmatch
+                                //        };
+                                //        options.messages['lengthonotherpropertyvalue'] = options.message;
+                                //    });
+
+    </script>
+
+
+
+</body>
+</html>

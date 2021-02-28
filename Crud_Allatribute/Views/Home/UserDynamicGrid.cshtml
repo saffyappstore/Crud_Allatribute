@@ -1,0 +1,154 @@
+﻿@using ViewModelLayer;
+@model IEnumerable<ViewModelLayer.ColumnDto>
+
+@{
+    var AllColumns = (List<ColumnDto>)ViewBag.AllColumns;
+}
+
+<script>
+    var ColumnsName = @Html.Raw(Json.Encode(ViewBag.ColumnName));
+</script>
+<div class="btn-group">
+    <a class="btn ctx-btn-circle pull-right btn-icon-onlytodo-projects-config" id="addRemoveAdminColumns" title="Add/Remove"><i class="fa fa-trello">RemoveColumn</i></a>
+</div>
+<table class="table table-condensed" id="UserTable">
+    <thead>
+        <tr>
+            @{
+
+                foreach (var item in AllColumns)
+                {
+                    string columnWidth = item.ColumnWidth.ToString() + "px";
+
+                    <th style="width:@columnWidth">@item.ColumnText</th>
+                }
+
+            }
+
+        </tr>
+        <tr role="row" class="filters">
+
+            @{
+
+                foreach (var item in AllColumns)
+                {
+                    string columnWidth = item.ColumnWidth.ToString() + "px";
+
+                    if (item.ColumnType == "text")
+                    {
+                        <td style="width:@columnWidth">
+                            <input type="text" id="@item.ColumnFilterId" />
+                        </td>
+                    }
+                    else
+                    {
+                        <td style="width:@columnWidth">
+                        </td>
+                    }
+
+                }
+            }
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<script src="~/Scripts/UserManager.js"></script>
+<script>
+    $(function () {
+        UserManager.loadGrid(ColumnsName);
+
+    });
+    $("#addRemoveAdminColumns").on("click", function () {
+        var url = "/Home/AddRemoveColumn";
+        $.get(url, { TableName: "tblUsers", ModalFor: "_User" }, function (data) {
+            $('#AddRemoveUserNewColumnsModal').modal('show');
+            $('#AddRemoveUser').html(data);
+        });
+    });
+        //var columnsData = [];
+        //debugger
+        //let grid = "#UserTable";
+        //let gridId = "UserTable";
+        //$.each(ColumnsName, function (i, item) {
+
+        //    columnsData.push({
+        //        "data": item,
+        //        "name": item
+        //    });
+        //});
+        //$("#UserTable").DataTable({
+
+        //    "processing": true, // for show progress bar
+        //    "serverSide": true, // for process server side
+        //    "filter": true, // this is for disable filter (search box)
+        //    "orderMulti": false, // for disable multiple column at once
+        //    "pageLength": 5,
+
+        //    "ajax": {
+        //        "url": "/Home/List",
+        //        "type": "POST",
+
+
+        //        //"data": function (d)
+        //        //{
+
+
+        //        //    //d.Search = globalGridSettings.getResetState() == true ? "1" : "";
+        //        //    d.SearchItems = GetItemsToSearch("");
+
+        //        //    //d.columnSortOrder = globalGridSettings.getSortOrder();
+        //        //}
+        //    },
+
+
+        //    "columns": columnsData,
+        //                                  });
+        //                                  });
+        //var userGrid = new Datatable();
+        //userGrid.init({
+        //    src: $(grid),
+        //    onSuccess: function (grid, response) {
+        //    },
+        //    onError: function (grid) {
+        //    },
+        //    onDataLoad: function (grid) {
+        //    },
+
+        //    loadingMessage: 'none',
+        //    dataTable: {
+
+        //        "dom": "<'row'<'col-md-12 col-sm-12 dompagination'pli><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r><'table-responsive't><'row'<'col-md-12 col-sm-12 dompagination'pli><'col-md-4 col-sm-12'>>", // datatable layout
+        //        "pageLength": 10, // default records per page
+        //        "lengthMenu": [
+        //            [10, 25, 50, 100, -1],
+        //            [10, 25, 50, 100, "All"] // change per page values here
+        //        ],
+        //        "language": {
+        //            "lengthMenu": "<span class='seperator'>|</span> View _MENU_ Records",
+        //            "info": "<span class='seperator'>| </span>Found total _TOTAL_ records",
+        //            "infoEmpty": "<span class='seperator'>|</span>No records found to show",
+        //            "emptyTable": "No data available in table",
+        //            "zeroRecords": "No matching records found",
+        //        },
+
+        //        "pagingType": "bootstrap_extended",
+        //        "searching": true,
+        //        "ordering": true,
+        //        "info": true,
+        //        //"stateSave": true,
+
+
+        //        "ajax": {
+
+        //            "url": '/Home/List',
+
+        //        },
+
+
+        //        "columns": columnsData,
+
+
+        //    }
+        //})
+
+</script>

@@ -1,0 +1,82 @@
+﻿
+@model ViewModelLayer.ContactForm
+@{
+    ViewBag.Title = "ContactEnrollmentForm";
+}
+<style>
+    .input-group {
+        width: 100%;
+    }
+
+    label.control-label {
+        margin: 0;
+        font-weight: 600 !important;
+    }
+
+    input.form-control:focus {
+        border: 1px solid #1271c4 !important;
+        opacity: 0.7;
+        transition: .3s ease;
+    }
+
+    input.form-control {
+        transition: .3s ease;
+    }
+
+    .page-container.sizeContainer {
+        height: 100% !important;
+    }
+
+    .studentInfo_Sections {
+        font-weight: 600;
+        padding: 8px;
+        background: #eff3f8;
+        border-left: 2px solid #1271c4;
+        margin-bottom: 22px;
+        text-align: left;
+        font-size: 16px;
+    }
+
+    .contact-form-logo {
+        text-align: center;
+    }
+
+    .ta-cen {
+        text-align: center;
+    }
+
+        .ta-cen img {
+            max-width: 140px;
+        }
+</style>
+<h2>ContactEnrollmentForm</h2>
+@using (Ajax.BeginForm("ContactEnrollmentForm", "Home", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnSuccess = "SaveContactEnrollmentSuccess(data, status, xhr)",
+    OnFailure = "SaveContactEnrollmentError"
+
+}, new { @class = "container-fluid", @id = "ContactForm" }))
+{
+    @Html.HiddenFor(m => m.ContactId, new { @id = "ContactIdHiddenVal" })
+    @Html.HiddenFor(m => m.CompanyKey, new { @id = "CompanyKeyHiddenVal" })
+    @Html.HiddenFor(m => m.CompanyGuid, new { @id = "CompanyGuidHiddenVal" })
+    @Html.HiddenFor(model => model.DynamicFieldsData, new { id = "DynamicFieldsData" })
+    <div class="modal-body container">
+        <div class="col-md-12">
+            <h4 class="studentInfo_Sections"><span style="color:#1271c4 !important;">Franchise Contact Form</span></h4>
+        </div>
+        <div class="col-md-12">
+            @Html.Partial("~/Views/Home/_ContactFormElement.cshtml", Model.ContactFormDetails)
+        </div>
+    </div>
+    <div class="modal-footer container">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <input type="submit" class="btn btn-default" id="SubmitContactForm" value="Submit" onclick="return ContactForm.ContactValues();">
+            </div>
+        </div>
+    </div>
+
+}
+<script src="~/Scripts/ContactForm.js"></script>

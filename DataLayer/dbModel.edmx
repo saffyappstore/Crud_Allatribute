@@ -1,0 +1,732 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="UserModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cmatrix_contact">
+          <Key>
+            <PropertyRef Name="ccf_key" />
+          </Key>
+          <Property Name="ccf_key" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ccf_name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ccf_created_date" Type="datetime" Nullable="false" />
+          <Property Name="ccf_is_deleted" Type="bit" />
+          <Property Name="ccef_is_selected" Type="bit" />
+          <Property Name="ccef_cmp_key" Type="int" />
+          <Property Name="ccf_is_enrollment_form_submitted" Type="bit" />
+        </EntityType>
+        <EntityType Name="cmatrix_contact_form_data">
+          <Key>
+            <PropertyRef Name="ccfd_key" />
+          </Key>
+          <Property Name="ccfd_key" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ccfd_ccb_key" Type="int" />
+          <Property Name="ccfd_data" Type="nvarchar(max)" />
+          <Property Name="ccfd_ccftd_key" Type="int" />
+          <Property Name="ccfd_atk_key" Type="int" />
+        </EntityType>
+        <EntityType Name="cmatrix_contact_form_template_details">
+          <Key>
+            <PropertyRef Name="ccftd_key" />
+          </Key>
+          <Property Name="ccftd_key" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ccftd_cmp_key" Type="int" />
+          <Property Name="ccftd_cab_type" Type="int" />
+          <Property Name="ccftd_attr_type" Type="int" Nullable="false" />
+          <Property Name="ccftd_order" Type="int" Nullable="false" />
+          <Property Name="ccftd_field_name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ccftd_field_label" Type="nvarchar" MaxLength="150" />
+          <Property Name="ccftd_field_info" Type="nvarchar(max)" />
+          <Property Name="ccftd_cab_col_name" Type="int" />
+          <Property Name="ccftd_col_span" Type="int" Nullable="false" />
+          <Property Name="ccftd_is_req" Type="bit" Nullable="false" />
+          <Property Name="ccftd_is_active" Type="bit" Nullable="false" />
+          <Property Name="ccftd_is_default" Type="bit" />
+          <Property Name="ccftd_tab_type" Type="int" />
+          <Property Name="ccftd_options" Type="nvarchar(max)" />
+          <Property Name="ccftd_ddl_type" Type="int" />
+          <Property Name="ccftd_field_placeholder" Type="nvarchar" MaxLength="150" />
+          <Property Name="ccftd_error_message" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="cmatrix_student_enrollment_section">
+          <Key>
+            <PropertyRef Name="cses_key" />
+          </Key>
+          <Property Name="cses_key" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cses_name" Type="nvarchar" MaxLength="1000" />
+          <Property Name="cses_cmp_key" Type="int" />
+          <Property Name="cses_isdeleted" Type="bit" />
+          <Property Name="cses_order" Type="int" />
+          <Property Name="cses_enum" Type="int" />
+          <Property Name="cses_cab_type" Type="int" />
+          <Property Name="cses_is_active" Type="bit" />
+          <Property Name="cses_is_editable" Type="bit" />
+          <Property Name="cses_is_allow_add_controls" Type="bit" />
+          <Property Name="cses_is_show_enable_icon" Type="bit" />
+          <Property Name="cses_is_deleteable" Type="bit" />
+          <Property Name="cses_ceef_key" Type="int" />
+          <Property Name="cses_app_sync_key" Type="int" />
+        </EntityType>
+        <EntityType Name="cmatrix_student_form_data">
+          <Key>
+            <PropertyRef Name="csfd_key" />
+          </Key>
+          <Property Name="csfd_key" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="csfd_data" Type="varchar(max)" />
+          <Property Name="csfd_csftd_key" Type="int" />
+          <Property Name="csfd_usr_key" Type="int" />
+          <Property Name="csfd_cmp_key" Type="int" />
+          <Property Name="csfd_json_list" Type="varchar(max)" />
+          <Property Name="csftd_record_guid" Type="uniqueidentifier" />
+          <Property Name="csfd_is_for_event" Type="bit" />
+          <Property Name="csfd_cee_key" Type="int" />
+        </EntityType>
+        <EntityType Name="cmatrix_student_form_template_details">
+          <Key>
+            <PropertyRef Name="csftd_key" />
+          </Key>
+          <Property Name="csftd_key" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="csftd_cmp_key" Type="int" />
+          <Property Name="csftd_attr_type" Type="int" Nullable="false" />
+          <Property Name="csftd_order" Type="int" Nullable="false" />
+          <Property Name="csftd_field_name" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="csftd_field_label" Type="nvarchar" MaxLength="1000" />
+          <Property Name="csftd_field_info" Type="nvarchar(max)" />
+          <Property Name="csftd_cab_col_name" Type="int" />
+          <Property Name="csftd_col_span" Type="int" Nullable="false" />
+          <Property Name="csftd_is_req" Type="bit" Nullable="false" />
+          <Property Name="csftd_is_active" Type="bit" Nullable="false" />
+          <Property Name="csftd_is_default" Type="bit" />
+          <Property Name="csftd_tab_type" Type="int" />
+          <Property Name="csftd_options" Type="varchar(max)" />
+          <Property Name="csftd_ddl_type" Type="int" />
+          <Property Name="csftd_field_placeholder" Type="varchar" MaxLength="150" />
+          <Property Name="csftd_cses_key" Type="int" />
+          <Property Name="csftd_cab_type" Type="int" />
+          <Property Name="csftd_validation_msg" Type="nvarchar(max)" />
+          <Property Name="csftd_app_sync_key" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'User.dbo.ColumnSettings' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ColumnSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GridName" Type="varchar" MaxLength="50" />
+          <Property Name="ColumnText" Type="varchar" MaxLength="50" />
+          <Property Name="ColumnType" Type="varchar" MaxLength="50" />
+          <Property Name="ColumnFilterId" Type="varchar" MaxLength="50" />
+          <Property Name="ColumnWidth" Type="varchar" MaxLength="50" />
+          <Property Name="IsMandatory" Type="bit" />
+          <Property Name="ColumnOrder" Type="int" />
+          <Property Name="IsVisible" Type="bit" />
+        </EntityType>
+        <EntityType Name="ColumnUsersSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GridName" Type="varchar" MaxLength="50" />
+          <Property Name="ColumnText" Type="varchar" MaxLength="50" />
+          <Property Name="ColumnType" Type="varchar" MaxLength="50" />
+          <Property Name="ColumnFilterId" Type="varchar" MaxLength="50" />
+          <Property Name="ColumnWidth" Type="varchar" MaxLength="50" />
+          <Property Name="IsMandatory" Type="bit" />
+          <Property Name="ColumnOrder" Type="int" />
+          <Property Name="IsVisible" Type="bit" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tbl_city">
+          <Key>
+            <PropertyRef Name="Cityid" />
+          </Key>
+          <Property Name="Cityid" Type="int" Nullable="false" />
+          <Property Name="Cityname" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_user">
+          <Key>
+            <PropertyRef Name="Userid" />
+          </Key>
+          <Property Name="Userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsJava" Type="bit" />
+          <Property Name="IsCsharp" Type="bit" />
+          <Property Name="IsPaython" Type="bit" />
+          <Property Name="cityid" Type="int" />
+          <Property Name="Startdate" Type="date" />
+          <Property Name="Enddate" Type="date" />
+          <Property Name="CityIds" Type="varchar" MaxLength="50" />
+          <Property Name="ImagePath" Type="nvarchar(max)" />
+          <Property Name="CountryID" Type="int" />
+          <Property Name="StateId" Type="int" />
+        </EntityType>
+        <Association Name="FK__cmatrix_s__csfd___2F4FF79D">
+          <End Role="cmatrix_student_form_template_details" Type="Self.cmatrix_student_form_template_details" Multiplicity="0..1" />
+          <End Role="cmatrix_student_form_data" Type="Self.cmatrix_student_form_data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmatrix_student_form_template_details">
+              <PropertyRef Name="csftd_key" />
+            </Principal>
+            <Dependent Role="cmatrix_student_form_data">
+              <PropertyRef Name="csfd_csftd_key" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__cmatrix_s__csftd__2D67AF2B">
+          <End Role="cmatrix_student_enrollment_section" Type="Self.cmatrix_student_enrollment_section" Multiplicity="0..1" />
+          <End Role="cmatrix_student_form_template_details" Type="Self.cmatrix_student_form_template_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmatrix_student_enrollment_section">
+              <PropertyRef Name="cses_key" />
+            </Principal>
+            <Dependent Role="cmatrix_student_form_template_details">
+              <PropertyRef Name="csftd_cses_key" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cmatrix_contact_form_data_cmatrix_contact_form_template_details">
+          <End Role="cmatrix_contact_form_template_details" Type="Self.cmatrix_contact_form_template_details" Multiplicity="0..1" />
+          <End Role="cmatrix_contact_form_data" Type="Self.cmatrix_contact_form_data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmatrix_contact_form_template_details">
+              <PropertyRef Name="ccftd_key" />
+            </Principal>
+            <Dependent Role="cmatrix_contact_form_data">
+              <PropertyRef Name="ccfd_ccftd_key" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_user_tbl_city">
+          <End Role="tbl_city" Type="Self.tbl_city" Multiplicity="0..1" />
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_city">
+              <PropertyRef Name="Cityid" />
+            </Principal>
+            <Dependent Role="tbl_user">
+              <PropertyRef Name="cityid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UserModelStoreContainer">
+          <EntitySet Name="cmatrix_contact" EntityType="Self.cmatrix_contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cmatrix_contact_form_data" EntityType="Self.cmatrix_contact_form_data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cmatrix_contact_form_template_details" EntityType="Self.cmatrix_contact_form_template_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cmatrix_student_enrollment_section" EntityType="Self.cmatrix_student_enrollment_section" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cmatrix_student_form_data" EntityType="Self.cmatrix_student_form_data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cmatrix_student_form_template_details" EntityType="Self.cmatrix_student_form_template_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ColumnUsersSettings" EntityType="Self.ColumnUsersSettings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_city" EntityType="Self.tbl_city" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_user" EntityType="Self.tbl_user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ColumnSettings" EntityType="Self.ColumnSettings" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ColumnSettings].[Id] AS [Id], 
+    [ColumnSettings].[GridName] AS [GridName], 
+    [ColumnSettings].[ColumnText] AS [ColumnText], 
+    [ColumnSettings].[ColumnType] AS [ColumnType], 
+    [ColumnSettings].[ColumnFilterId] AS [ColumnFilterId], 
+    [ColumnSettings].[ColumnWidth] AS [ColumnWidth], 
+    [ColumnSettings].[IsMandatory] AS [IsMandatory], 
+    [ColumnSettings].[ColumnOrder] AS [ColumnOrder], 
+    [ColumnSettings].[IsVisible] AS [IsVisible]
+    FROM [dbo].[ColumnSettings] AS [ColumnSettings]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__cmatrix_s__csfd___2F4FF79D" Association="Self.FK__cmatrix_s__csfd___2F4FF79D">
+            <End Role="cmatrix_student_form_template_details" EntitySet="cmatrix_student_form_template_details" />
+            <End Role="cmatrix_student_form_data" EntitySet="cmatrix_student_form_data" />
+          </AssociationSet>
+          <AssociationSet Name="FK__cmatrix_s__csftd__2D67AF2B" Association="Self.FK__cmatrix_s__csftd__2D67AF2B">
+            <End Role="cmatrix_student_enrollment_section" EntitySet="cmatrix_student_enrollment_section" />
+            <End Role="cmatrix_student_form_template_details" EntitySet="cmatrix_student_form_template_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cmatrix_contact_form_data_cmatrix_contact_form_template_details" Association="Self.FK_cmatrix_contact_form_data_cmatrix_contact_form_template_details">
+            <End Role="cmatrix_contact_form_template_details" EntitySet="cmatrix_contact_form_template_details" />
+            <End Role="cmatrix_contact_form_data" EntitySet="cmatrix_contact_form_data" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_user_tbl_city" Association="Self.FK_tbl_user_tbl_city">
+            <End Role="tbl_city" EntitySet="tbl_city" />
+            <End Role="tbl_user" EntitySet="tbl_user" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UserModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tbl_city">
+          <Key>
+            <PropertyRef Name="Cityid" />
+          </Key>
+          <Property Name="Cityid" Type="Int32" Nullable="false" />
+          <Property Name="Cityname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_user" Relationship="Self.FK_tbl_user_tbl_city" FromRole="tbl_city" ToRole="tbl_user" />
+        </EntityType>
+        <EntityType Name="tbl_user">
+          <Key>
+            <PropertyRef Name="Userid" />
+          </Key>
+          <Property Name="Userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsJava" Type="Boolean" />
+          <Property Name="IsCsharp" Type="Boolean" />
+          <Property Name="IsPaython" Type="Boolean" />
+          <Property Name="cityid" Type="Int32" />
+          <Property Name="Startdate" Type="DateTime" Precision="0" />
+          <Property Name="Enddate" Type="DateTime" Precision="0" />
+          <Property Name="CityIds" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CountryID" Type="Int32" />
+          <Property Name="StateId" Type="Int32" />
+          <NavigationProperty Name="tbl_city" Relationship="Self.FK_tbl_user_tbl_city" FromRole="tbl_user" ToRole="tbl_city" />
+        </EntityType>
+        <Association Name="FK_tbl_user_tbl_city">
+          <End Role="tbl_city" Type="Self.tbl_city" Multiplicity="0..1" />
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_city">
+              <PropertyRef Name="Cityid" />
+            </Principal>
+            <Dependent Role="tbl_user">
+              <PropertyRef Name="cityid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UserEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="tbl_city" EntityType="Self.tbl_city" />
+          <EntitySet Name="tbl_user" EntityType="Self.tbl_user" />
+          <AssociationSet Name="FK_tbl_user_tbl_city" Association="Self.FK_tbl_user_tbl_city">
+            <End Role="tbl_city" EntitySet="tbl_city" />
+            <End Role="tbl_user" EntitySet="tbl_user" />
+          </AssociationSet>
+          <EntitySet Name="ColumnSettings" EntityType="UserModel.ColumnSetting" />
+          <EntitySet Name="ColumnUsersSettings" EntityType="UserModel.ColumnUsersSetting" />
+          <EntitySet Name="cmatrix_contact_form_template_details" EntityType="UserModel.cmatrix_contact_form_template_details" />
+          <EntitySet Name="cmatrix_contact" EntityType="UserModel.cmatrix_contact" />
+          <EntitySet Name="cmatrix_contact_form_data" EntityType="UserModel.cmatrix_contact_form_data" />
+          <AssociationSet Name="FK_cmatrix_contact_form_data_cmatrix_contact_form_template_details" Association="UserModel.FK_cmatrix_contact_form_data_cmatrix_contact_form_template_details">
+            <End Role="cmatrix_contact_form_template_details" EntitySet="cmatrix_contact_form_template_details" />
+            <End Role="cmatrix_contact_form_data" EntitySet="cmatrix_contact_form_data" />
+          </AssociationSet>
+          <EntitySet Name="cmatrix_student_enrollment_section" EntityType="UserModel.cmatrix_student_enrollment_section" />
+          <EntitySet Name="cmatrix_student_form_data" EntityType="UserModel.cmatrix_student_form_data" />
+          <EntitySet Name="cmatrix_student_form_template_details" EntityType="UserModel.cmatrix_student_form_template_details" />
+          <AssociationSet Name="FK__cmatrix_s__csftd__2D67AF2B" Association="UserModel.FK__cmatrix_s__csftd__2D67AF2B">
+            <End Role="cmatrix_student_enrollment_section" EntitySet="cmatrix_student_enrollment_section" />
+            <End Role="cmatrix_student_form_template_details" EntitySet="cmatrix_student_form_template_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__cmatrix_s__csfd___2F4FF79D" Association="UserModel.FK__cmatrix_s__csfd___2F4FF79D">
+            <End Role="cmatrix_student_form_template_details" EntitySet="cmatrix_student_form_template_details" />
+            <End Role="cmatrix_student_form_data" EntitySet="cmatrix_student_form_data" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ColumnSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GridName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ColumnText" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ColumnType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ColumnFilterId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ColumnWidth" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsMandatory" Type="Boolean" />
+          <Property Name="ColumnOrder" Type="Int32" />
+          <Property Name="IsVisible" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ColumnUsersSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GridName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ColumnText" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ColumnType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ColumnFilterId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ColumnWidth" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsMandatory" Type="Boolean" />
+          <Property Name="ColumnOrder" Type="Int32" />
+          <Property Name="IsVisible" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="cmatrix_contact_form_template_details">
+          <Key>
+            <PropertyRef Name="ccftd_key" />
+          </Key>
+          <Property Name="ccftd_key" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ccftd_cmp_key" Type="Int32" />
+          <Property Name="ccftd_cab_type" Type="Int32" />
+          <Property Name="ccftd_attr_type" Type="Int32" Nullable="false" />
+          <Property Name="ccftd_order" Type="Int32" Nullable="false" />
+          <Property Name="ccftd_field_name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ccftd_field_label" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ccftd_field_info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ccftd_cab_col_name" Type="Int32" />
+          <Property Name="ccftd_col_span" Type="Int32" Nullable="false" />
+          <Property Name="ccftd_is_req" Type="Boolean" Nullable="false" />
+          <Property Name="ccftd_is_active" Type="Boolean" Nullable="false" />
+          <Property Name="ccftd_is_default" Type="Boolean" />
+          <Property Name="ccftd_tab_type" Type="Int32" />
+          <Property Name="ccftd_options" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ccftd_ddl_type" Type="Int32" />
+          <Property Name="ccftd_field_placeholder" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ccftd_error_message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="cmatrix_contact_form_data" Relationship="UserModel.FK_cmatrix_contact_form_data_cmatrix_contact_form_template_details" FromRole="cmatrix_contact_form_template_details" ToRole="cmatrix_contact_form_data" />
+        </EntityType>
+        <EntityType Name="cmatrix_contact">
+          <Key>
+            <PropertyRef Name="ccf_key" />
+          </Key>
+          <Property Name="ccf_key" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ccf_name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ccf_created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ccf_is_deleted" Type="Boolean" />
+          <Property Name="ccef_is_selected" Type="Boolean" />
+          <Property Name="ccef_cmp_key" Type="Int32" />
+          <Property Name="ccf_is_enrollment_form_submitted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="cmatrix_contact_form_data">
+          <Key>
+            <PropertyRef Name="ccfd_key" />
+          </Key>
+          <Property Name="ccfd_key" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ccfd_ccb_key" Type="Int32" />
+          <Property Name="ccfd_data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ccfd_ccftd_key" Type="Int32" />
+          <Property Name="ccfd_atk_key" Type="Int32" />
+          <NavigationProperty Name="cmatrix_contact_form_template_details" Relationship="UserModel.FK_cmatrix_contact_form_data_cmatrix_contact_form_template_details" FromRole="cmatrix_contact_form_data" ToRole="cmatrix_contact_form_template_details" />
+        </EntityType>
+        <Association Name="FK_cmatrix_contact_form_data_cmatrix_contact_form_template_details">
+          <End Type="UserModel.cmatrix_contact_form_template_details" Role="cmatrix_contact_form_template_details" Multiplicity="0..1" />
+          <End Type="UserModel.cmatrix_contact_form_data" Role="cmatrix_contact_form_data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmatrix_contact_form_template_details">
+              <PropertyRef Name="ccftd_key" />
+            </Principal>
+            <Dependent Role="cmatrix_contact_form_data">
+              <PropertyRef Name="ccfd_ccftd_key" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="cmatrix_student_enrollment_section">
+          <Key>
+            <PropertyRef Name="cses_key" />
+          </Key>
+          <Property Name="cses_key" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cses_name" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="cses_cmp_key" Type="Int32" />
+          <Property Name="cses_isdeleted" Type="Boolean" />
+          <Property Name="cses_order" Type="Int32" />
+          <Property Name="cses_enum" Type="Int32" />
+          <Property Name="cses_cab_type" Type="Int32" />
+          <Property Name="cses_is_active" Type="Boolean" />
+          <Property Name="cses_is_editable" Type="Boolean" />
+          <Property Name="cses_is_allow_add_controls" Type="Boolean" />
+          <Property Name="cses_is_show_enable_icon" Type="Boolean" />
+          <Property Name="cses_is_deleteable" Type="Boolean" />
+          <Property Name="cses_ceef_key" Type="Int32" />
+          <Property Name="cses_app_sync_key" Type="Int32" />
+          <NavigationProperty Name="cmatrix_student_form_template_details" Relationship="UserModel.FK__cmatrix_s__csftd__2D67AF2B" FromRole="cmatrix_student_enrollment_section" ToRole="cmatrix_student_form_template_details" />
+        </EntityType>
+        <EntityType Name="cmatrix_student_form_data">
+          <Key>
+            <PropertyRef Name="csfd_key" />
+          </Key>
+          <Property Name="csfd_key" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="csfd_data" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="csfd_csftd_key" Type="Int32" />
+          <Property Name="csfd_usr_key" Type="Int32" />
+          <Property Name="csfd_cmp_key" Type="Int32" />
+          <Property Name="csfd_json_list" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="csftd_record_guid" Type="Guid" />
+          <Property Name="csfd_is_for_event" Type="Boolean" />
+          <Property Name="csfd_cee_key" Type="Int32" />
+          <NavigationProperty Name="cmatrix_student_form_template_details" Relationship="UserModel.FK__cmatrix_s__csfd___2F4FF79D" FromRole="cmatrix_student_form_data" ToRole="cmatrix_student_form_template_details" />
+        </EntityType>
+        <EntityType Name="cmatrix_student_form_template_details">
+          <Key>
+            <PropertyRef Name="csftd_key" />
+          </Key>
+          <Property Name="csftd_key" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="csftd_cmp_key" Type="Int32" />
+          <Property Name="csftd_attr_type" Type="Int32" Nullable="false" />
+          <Property Name="csftd_order" Type="Int32" Nullable="false" />
+          <Property Name="csftd_field_name" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="csftd_field_label" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="csftd_field_info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="csftd_cab_col_name" Type="Int32" />
+          <Property Name="csftd_col_span" Type="Int32" Nullable="false" />
+          <Property Name="csftd_is_req" Type="Boolean" Nullable="false" />
+          <Property Name="csftd_is_active" Type="Boolean" Nullable="false" />
+          <Property Name="csftd_is_default" Type="Boolean" />
+          <Property Name="csftd_tab_type" Type="Int32" />
+          <Property Name="csftd_options" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="csftd_ddl_type" Type="Int32" />
+          <Property Name="csftd_field_placeholder" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="csftd_cses_key" Type="Int32" />
+          <Property Name="csftd_cab_type" Type="Int32" />
+          <Property Name="csftd_validation_msg" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="csftd_app_sync_key" Type="Int32" />
+          <NavigationProperty Name="cmatrix_student_enrollment_section" Relationship="UserModel.FK__cmatrix_s__csftd__2D67AF2B" FromRole="cmatrix_student_form_template_details" ToRole="cmatrix_student_enrollment_section" />
+          <NavigationProperty Name="cmatrix_student_form_data" Relationship="UserModel.FK__cmatrix_s__csfd___2F4FF79D" FromRole="cmatrix_student_form_template_details" ToRole="cmatrix_student_form_data" />
+        </EntityType>
+        <Association Name="FK__cmatrix_s__csftd__2D67AF2B">
+          <End Type="UserModel.cmatrix_student_enrollment_section" Role="cmatrix_student_enrollment_section" Multiplicity="0..1" />
+          <End Type="UserModel.cmatrix_student_form_template_details" Role="cmatrix_student_form_template_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmatrix_student_enrollment_section">
+              <PropertyRef Name="cses_key" />
+            </Principal>
+            <Dependent Role="cmatrix_student_form_template_details">
+              <PropertyRef Name="csftd_cses_key" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__cmatrix_s__csfd___2F4FF79D">
+          <End Type="UserModel.cmatrix_student_form_template_details" Role="cmatrix_student_form_template_details" Multiplicity="0..1" />
+          <End Type="UserModel.cmatrix_student_form_data" Role="cmatrix_student_form_data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmatrix_student_form_template_details">
+              <PropertyRef Name="csftd_key" />
+            </Principal>
+            <Dependent Role="cmatrix_student_form_data">
+              <PropertyRef Name="csfd_csftd_key" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UserModelStoreContainer" CdmEntityContainer="UserEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="UserModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_city">
+            <EntityTypeMapping TypeName="UserModel.tbl_city">
+              <MappingFragment StoreEntitySet="tbl_city">
+                <ScalarProperty Name="Cityid" ColumnName="Cityid" />
+                <ScalarProperty Name="Cityname" ColumnName="Cityname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_user">
+            <EntityTypeMapping TypeName="UserModel.tbl_user">
+              <MappingFragment StoreEntitySet="tbl_user">
+                <ScalarProperty Name="Userid" ColumnName="Userid" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="IsJava" ColumnName="IsJava" />
+                <ScalarProperty Name="IsCsharp" ColumnName="IsCsharp" />
+                <ScalarProperty Name="IsPaython" ColumnName="IsPaython" />
+                <ScalarProperty Name="cityid" ColumnName="cityid" />
+                <ScalarProperty Name="Startdate" ColumnName="Startdate" />
+                <ScalarProperty Name="Enddate" ColumnName="Enddate" />
+                <ScalarProperty Name="CityIds" ColumnName="CityIds" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ColumnSettings">
+            <EntityTypeMapping TypeName="UserModel.ColumnSetting">
+              <MappingFragment StoreEntitySet="ColumnSettings">
+                <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
+                <ScalarProperty Name="ColumnOrder" ColumnName="ColumnOrder" />
+                <ScalarProperty Name="IsMandatory" ColumnName="IsMandatory" />
+                <ScalarProperty Name="ColumnWidth" ColumnName="ColumnWidth" />
+                <ScalarProperty Name="ColumnFilterId" ColumnName="ColumnFilterId" />
+                <ScalarProperty Name="ColumnType" ColumnName="ColumnType" />
+                <ScalarProperty Name="ColumnText" ColumnName="ColumnText" />
+                <ScalarProperty Name="GridName" ColumnName="GridName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ColumnUsersSettings">
+            <EntityTypeMapping TypeName="UserModel.ColumnUsersSetting">
+              <MappingFragment StoreEntitySet="ColumnUsersSettings">
+                <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
+                <ScalarProperty Name="ColumnOrder" ColumnName="ColumnOrder" />
+                <ScalarProperty Name="IsMandatory" ColumnName="IsMandatory" />
+                <ScalarProperty Name="ColumnWidth" ColumnName="ColumnWidth" />
+                <ScalarProperty Name="ColumnFilterId" ColumnName="ColumnFilterId" />
+                <ScalarProperty Name="ColumnType" ColumnName="ColumnType" />
+                <ScalarProperty Name="ColumnText" ColumnName="ColumnText" />
+                <ScalarProperty Name="GridName" ColumnName="GridName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cmatrix_contact_form_template_details">
+            <EntityTypeMapping TypeName="UserModel.cmatrix_contact_form_template_details">
+              <MappingFragment StoreEntitySet="cmatrix_contact_form_template_details">
+                <ScalarProperty Name="ccftd_error_message" ColumnName="ccftd_error_message" />
+                <ScalarProperty Name="ccftd_field_placeholder" ColumnName="ccftd_field_placeholder" />
+                <ScalarProperty Name="ccftd_ddl_type" ColumnName="ccftd_ddl_type" />
+                <ScalarProperty Name="ccftd_options" ColumnName="ccftd_options" />
+                <ScalarProperty Name="ccftd_tab_type" ColumnName="ccftd_tab_type" />
+                <ScalarProperty Name="ccftd_is_default" ColumnName="ccftd_is_default" />
+                <ScalarProperty Name="ccftd_is_active" ColumnName="ccftd_is_active" />
+                <ScalarProperty Name="ccftd_is_req" ColumnName="ccftd_is_req" />
+                <ScalarProperty Name="ccftd_col_span" ColumnName="ccftd_col_span" />
+                <ScalarProperty Name="ccftd_cab_col_name" ColumnName="ccftd_cab_col_name" />
+                <ScalarProperty Name="ccftd_field_info" ColumnName="ccftd_field_info" />
+                <ScalarProperty Name="ccftd_field_label" ColumnName="ccftd_field_label" />
+                <ScalarProperty Name="ccftd_field_name" ColumnName="ccftd_field_name" />
+                <ScalarProperty Name="ccftd_order" ColumnName="ccftd_order" />
+                <ScalarProperty Name="ccftd_attr_type" ColumnName="ccftd_attr_type" />
+                <ScalarProperty Name="ccftd_cab_type" ColumnName="ccftd_cab_type" />
+                <ScalarProperty Name="ccftd_cmp_key" ColumnName="ccftd_cmp_key" />
+                <ScalarProperty Name="ccftd_key" ColumnName="ccftd_key" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cmatrix_contact">
+            <EntityTypeMapping TypeName="UserModel.cmatrix_contact">
+              <MappingFragment StoreEntitySet="cmatrix_contact">
+                <ScalarProperty Name="ccf_is_enrollment_form_submitted" ColumnName="ccf_is_enrollment_form_submitted" />
+                <ScalarProperty Name="ccef_cmp_key" ColumnName="ccef_cmp_key" />
+                <ScalarProperty Name="ccef_is_selected" ColumnName="ccef_is_selected" />
+                <ScalarProperty Name="ccf_is_deleted" ColumnName="ccf_is_deleted" />
+                <ScalarProperty Name="ccf_created_date" ColumnName="ccf_created_date" />
+                <ScalarProperty Name="ccf_name" ColumnName="ccf_name" />
+                <ScalarProperty Name="ccf_key" ColumnName="ccf_key" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cmatrix_contact_form_data">
+            <EntityTypeMapping TypeName="UserModel.cmatrix_contact_form_data">
+              <MappingFragment StoreEntitySet="cmatrix_contact_form_data">
+                <ScalarProperty Name="ccfd_atk_key" ColumnName="ccfd_atk_key" />
+                <ScalarProperty Name="ccfd_ccftd_key" ColumnName="ccfd_ccftd_key" />
+                <ScalarProperty Name="ccfd_data" ColumnName="ccfd_data" />
+                <ScalarProperty Name="ccfd_ccb_key" ColumnName="ccfd_ccb_key" />
+                <ScalarProperty Name="ccfd_key" ColumnName="ccfd_key" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cmatrix_student_enrollment_section">
+            <EntityTypeMapping TypeName="UserModel.cmatrix_student_enrollment_section">
+              <MappingFragment StoreEntitySet="cmatrix_student_enrollment_section">
+                <ScalarProperty Name="cses_app_sync_key" ColumnName="cses_app_sync_key" />
+                <ScalarProperty Name="cses_ceef_key" ColumnName="cses_ceef_key" />
+                <ScalarProperty Name="cses_is_deleteable" ColumnName="cses_is_deleteable" />
+                <ScalarProperty Name="cses_is_show_enable_icon" ColumnName="cses_is_show_enable_icon" />
+                <ScalarProperty Name="cses_is_allow_add_controls" ColumnName="cses_is_allow_add_controls" />
+                <ScalarProperty Name="cses_is_editable" ColumnName="cses_is_editable" />
+                <ScalarProperty Name="cses_is_active" ColumnName="cses_is_active" />
+                <ScalarProperty Name="cses_cab_type" ColumnName="cses_cab_type" />
+                <ScalarProperty Name="cses_enum" ColumnName="cses_enum" />
+                <ScalarProperty Name="cses_order" ColumnName="cses_order" />
+                <ScalarProperty Name="cses_isdeleted" ColumnName="cses_isdeleted" />
+                <ScalarProperty Name="cses_cmp_key" ColumnName="cses_cmp_key" />
+                <ScalarProperty Name="cses_name" ColumnName="cses_name" />
+                <ScalarProperty Name="cses_key" ColumnName="cses_key" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cmatrix_student_form_data">
+            <EntityTypeMapping TypeName="UserModel.cmatrix_student_form_data">
+              <MappingFragment StoreEntitySet="cmatrix_student_form_data">
+                <ScalarProperty Name="csfd_cee_key" ColumnName="csfd_cee_key" />
+                <ScalarProperty Name="csfd_is_for_event" ColumnName="csfd_is_for_event" />
+                <ScalarProperty Name="csftd_record_guid" ColumnName="csftd_record_guid" />
+                <ScalarProperty Name="csfd_json_list" ColumnName="csfd_json_list" />
+                <ScalarProperty Name="csfd_cmp_key" ColumnName="csfd_cmp_key" />
+                <ScalarProperty Name="csfd_usr_key" ColumnName="csfd_usr_key" />
+                <ScalarProperty Name="csfd_csftd_key" ColumnName="csfd_csftd_key" />
+                <ScalarProperty Name="csfd_data" ColumnName="csfd_data" />
+                <ScalarProperty Name="csfd_key" ColumnName="csfd_key" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cmatrix_student_form_template_details">
+            <EntityTypeMapping TypeName="UserModel.cmatrix_student_form_template_details">
+              <MappingFragment StoreEntitySet="cmatrix_student_form_template_details">
+                <ScalarProperty Name="csftd_app_sync_key" ColumnName="csftd_app_sync_key" />
+                <ScalarProperty Name="csftd_validation_msg" ColumnName="csftd_validation_msg" />
+                <ScalarProperty Name="csftd_cab_type" ColumnName="csftd_cab_type" />
+                <ScalarProperty Name="csftd_cses_key" ColumnName="csftd_cses_key" />
+                <ScalarProperty Name="csftd_field_placeholder" ColumnName="csftd_field_placeholder" />
+                <ScalarProperty Name="csftd_ddl_type" ColumnName="csftd_ddl_type" />
+                <ScalarProperty Name="csftd_options" ColumnName="csftd_options" />
+                <ScalarProperty Name="csftd_tab_type" ColumnName="csftd_tab_type" />
+                <ScalarProperty Name="csftd_is_default" ColumnName="csftd_is_default" />
+                <ScalarProperty Name="csftd_is_active" ColumnName="csftd_is_active" />
+                <ScalarProperty Name="csftd_is_req" ColumnName="csftd_is_req" />
+                <ScalarProperty Name="csftd_col_span" ColumnName="csftd_col_span" />
+                <ScalarProperty Name="csftd_cab_col_name" ColumnName="csftd_cab_col_name" />
+                <ScalarProperty Name="csftd_field_info" ColumnName="csftd_field_info" />
+                <ScalarProperty Name="csftd_field_label" ColumnName="csftd_field_label" />
+                <ScalarProperty Name="csftd_field_name" ColumnName="csftd_field_name" />
+                <ScalarProperty Name="csftd_order" ColumnName="csftd_order" />
+                <ScalarProperty Name="csftd_attr_type" ColumnName="csftd_attr_type" />
+                <ScalarProperty Name="csftd_cmp_key" ColumnName="csftd_cmp_key" />
+                <ScalarProperty Name="csftd_key" ColumnName="csftd_key" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

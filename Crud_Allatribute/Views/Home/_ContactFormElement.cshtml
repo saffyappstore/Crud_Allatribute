@@ -1,0 +1,260 @@
+﻿@model IEnumerable<ViewModelLayer.ContactFormDetail>
+@using Enums;
+<style>
+    .requiredfield-icon-position {
+        vertical-align: super;
+    }
+
+    .TopDiv hr {
+    }
+
+    #HeaderPreviewEditor img {
+        max-width: 100%;
+    }
+
+    .section_Name {
+        font-weight: 600;
+        text-align: left;
+    }
+
+    .studentInfo_Sections {
+        font-weight: 600;
+        padding: 8px;
+        background: #eff3f8;
+        border-left: 2px solid #1271c4;
+        margin-bottom: 22px;
+        text-align: left;
+        font-size: 16px;
+    }
+
+    .form-group .col-md-12 label.control-label {
+        font-weight: 600;
+    }
+
+    .ctx-Display-Block {
+        display: block;
+    }
+
+    #PoliciesandAgreement fieldset {
+        border: 0;
+        line-height: 1.8;
+    }
+
+    .form-group .col-md-12 .input-group.ctx-Display-Block .form-control {
+        height: 38px;
+        padding: 6px 10px;
+        border-radius: 3px !important;
+    }
+
+    #HeaderPreviewEditor p, #FooterPreviewEditor p {
+        text-align: center;
+    }
+
+    .labelView {
+        padding-left: 6px;
+    }
+
+    .modal-header h4 {
+        padding: 0px !important;
+    }
+
+    #franchiseEnrollmentForm .panel label .control-label {
+        white-space: normal;
+        padding-left: 20px;
+    }
+
+    #franchiseEnrollmentForm .panel label .check-field {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+    }
+
+    .checkBoxElementStyle {
+        display: flex;
+        padding-bottom: 10px;
+        align-items: center;
+    }
+
+        .checkBoxElementStyle input {
+            margin: 8px 6px 0 0;
+        }
+
+    span.error {
+        color: red !important;
+        border: none !important;
+    }
+
+    .empty-validation {
+        display: inline-block;
+    }
+
+    #Phone_Number.error {
+        border: 1px solid red !important;
+        background-color: #fee !important;
+    }
+
+    #EducationTable_wrapper.dataTables_wrapper.dataTables_extended_wrapper {
+        width: 100%;
+    }
+</style>
+@{
+    var isBreak = false;
+}
+@for (int i = 0; i < Model.Count(); i++)
+{
+
+    var labelClass = "control-label";
+    var labelClassNextElement = "control-label";
+    var fieldClass = "col-md-12";
+    var elementClass = "col-md-6";
+    var required = "";
+    var requiredNext = "";
+
+    var divLabelClass = "col-md-12";
+    var divLabelClassNextElement = "col-md-12";
+    var requiredClass = "";
+    var requiredClassNextElement = "";
+    if (Model.ElementAt(i).Colspan == 2)
+    {
+        labelClass = "control-label";
+        elementClass = "col-md-12";
+        fieldClass = "col-md-12";
+        divLabelClass = "col-md-12";
+    }
+    var FieldLable = Html.Raw(Model.ElementAt(i).FieldName);
+    if (Model.ElementAt(i).IsRequired)
+    {
+        requiredClass = "requiredfield";
+        required = "require";
+    }
+
+     if (isBreak)
+        {
+            isBreak = false;
+            continue;
+        }
+
+    if (Model.ElementAt(i).Colspan == 1)
+    {
+        switch (Model.ElementAt(i).attributeType)
+        {
+            case 78:
+
+                break;
+            default:
+                <div class="row">
+                    <div class='@elementClass form-group'>
+                        <div class="@divLabelClass">
+                            <label class="@labelClass" title="@FieldLable">@FieldLable: </label>
+                            <span class="@requiredClass"></span>
+                        </div>
+                        <div class='@fieldClass'>
+                            <div class="input-group ctx-Display-Block">
+                                <div class="">
+
+                                    @Html.Partial("~/Views/Home/_ContactElements.cshtml", Model.ElementAt(i))
+                                    @Html.ValidationMessage(Model.ElementAt(i).FieldName)
+                                    @if (Model.ElementAt(i).attributeType == (int)BacklogFormAttributesEnums.AttributeType.Text)
+                                    {
+                                        <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+                                        <span class="glyphicon glyphicon-ok form-control-feedback "></span>
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    @if ((i + 1) < Model.Count())
+                    {
+                        if (Model.ElementAt(i + 1).Colspan == 1)
+                        {
+                            isBreak = true;
+                            var NextFieldLable = Html.Raw(Model.ElementAt(i + 1).FieldName);
+                            if (Model.ElementAt(i + 1).IsRequired)
+                            {
+                                requiredClassNextElement = "requiredfield";
+                                requiredNext = "require";
+                            }
+
+                            switch (Model.ElementAt(i + 1).attributeType)
+                            {
+                                case 78:
+
+                                    break;
+                                default:
+                                    <div class='@elementClass form-group'>
+                                        <div class="@divLabelClassNextElement">
+                                            @*@Html.Label(Model.ElementAt(i + 1).FieldName, new { @class = labelClassNextElement, @title = Model.ElementAt(i + 1).FieldName })*@
+                                            <label class="@labelClassNextElement" title="@NextFieldLable">@NextFieldLable: </label>
+                                            <span class="@requiredClassNextElement"></span>
+                                        </div>
+                                        <div class='@fieldClass'>
+                                            <div class="ctx-Display-Block">
+                                                <div class="input-group ctx-Display-Block">
+                                                    @Html.Partial("~/Views/Home/_ContactElements.cshtml", Model.ElementAt(i + 1))
+                                                    @Html.ValidationMessage(Model.ElementAt(i + 1).FieldName)
+                                                    @if (Model.ElementAt(i).attributeType == (int)BacklogFormAttributesEnums.AttributeType.Text)
+                                                    {
+                                                        <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+                                                        <span class="glyphicon glyphicon-ok form-control-feedback "></span>
+                                                    }
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    break;
+                            }
+
+
+
+                        }
+                    }
+                </div>
+                break;
+        }
+
+
+    }
+    if (Model.ElementAt(i).Colspan == 2)
+    {
+        switch (Model.ElementAt(i).attributeType)
+        {
+            case 78:
+
+                break;
+            default:
+                <div class="row">
+                    <div class='@elementClass form-group'>
+                        <div class="@divLabelClass">
+                            <label class="@labelClass" title="@FieldLable">@FieldLable: </label>
+                            <span class="@requiredClass"></span>
+                        </div>
+                        <div class='@fieldClass'>
+                            <div class="input-group ctx-Display-Block">
+                                <div class="">
+                                    @Html.Partial("~/Views/Home/_ContactElements.cshtml", Model.ElementAt(i))
+                                    @Html.ValidationMessage(Model.ElementAt(i).FieldName)
+                                    @if (Model.ElementAt(i).attributeType == (int)BacklogFormAttributesEnums.AttributeType.Text)
+                                    {
+                                        <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+                                        <span class="glyphicon glyphicon-ok form-control-feedback "></span>
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                break;
+        }
+
+
+    }
+
+}
+
+
+
+

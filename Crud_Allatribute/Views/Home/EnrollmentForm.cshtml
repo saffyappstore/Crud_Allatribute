@@ -1,0 +1,15 @@
+﻿@model List<ViewModelLayer.StudentSectionDto>
+@{
+    ViewBag.Title = "EnrollmentForm";
+}
+
+<h2>EnrollmentForm</h2>
+<div class="container">
+    <form id="franchiseEnrollmentForm">
+        @Html.Partial("~/Views/Home/_PerviewStudentForm.cshtml", Model)
+    </form>
+    <div>
+        <input type="button" class="btn btn-default" onclick="Save()"/>
+    </div>
+</div>
+

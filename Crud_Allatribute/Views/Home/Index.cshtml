@@ -1,0 +1,221 @@
+﻿@model ViewModelLayer.ProfileViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+<br />
+<br />
+<br />
+<br />
+<style>
+    .datetimepicker {
+        position: relative;
+       
+    width: 100%
+    }
+    .btnEditDelte{
+        display:inline;
+        margin-left:10px;
+    }
+</style>
+<div class="form-group">
+    <label class="control-label col-md-2">
+        Multi Select
+    </label>
+    <div class="col-md-10">
+        @Html.ListBoxFor(model => model.Cityids,new SelectList(ViewBag.Cities,"Value","Text"), new { @class = "form-control multiselect", multiple = "multiple" ,id="franchise_stddl", @onchange = "CompaniesDDlEvent()" })
+        @Html.ValidationMessageFor(model => model.Cityids, "", new { @class = "text-danger required" })
+        @*@Html.ListBoxFor(model => model.cityids, new MultiSelectList(Model.Cities,"cityid","cityname"),new { @class = "form-control",@id="multiselect" })*@
+    </div>
+</div>
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>UserID</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Username</th>
+            <th>StartDate</th>
+            <th>EndDate</th>
+            <th>Action</th>
+            <th></th>
+        </tr>
+
+    </thead>
+    @*<thead class="filters">
+        <tr>
+
+            <th>
+                <input type="text" name="ID" />
+            </th>
+            <th>
+                <input type="text" name="Email" />
+            </th>
+            <th>
+                <input type="text" name="Gender" />
+            </th>
+            <th>
+                <input type="text" name="Username" />
+            </th>
+            <th>
+                <input type="text" name="StartDate" class="datetimepicker readonly" />
+            </th>
+            <th>
+                <input type="text" name="EndDate" class="datetimepicker readonly" />
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+    </thead>*@
+    <tbody>
+    </tbody>
+
+
+</table>
+<script>
+
+    $(document).ready(function () {
+
+         $('.datetimepicker').datetimepicker({
+             format: 'DD/MM/YYYY',
+              //format: 'L',
+             
+         });
+
+
+        var grid;
+          // Register date formats to allow DataTables sorting of the dates
+  
+        grid = $("#myTable").DataTable({
+
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "pageLength": 15,
+
+            "ajax": {
+                "url": "/Home/List",
+                "type": "POST",
+                "datatype": "json"
+            },
+
+
+            "columns": [
+                { "data": "Userid", "name": "ID", "autoWidth": true },
+                { "data": "Email", "name": "Email", "autoWidth": true },
+                { "data": "Gender", "name": "Gender", "autoWidth": true },
+                { "data": "Username", "name": "Username", "autoWidth": true },
+                {
+                    "data": "StartDate", "name": "StartDate", "autoWidth": true,
+                    render: function (data, type, row) {//data
+                         return moment(data).format('DD/MM/YYYY');
+                         },
+                },
+                {
+                    "data": "EndDate", "name": "EndDate", "autoWidth": true,
+                    render: function (data, type, row) {//data
+                         return moment(data).format('DD/MM/YYYY');
+                         },
+                },
+                 { "data": "Action", "name": "Action","sortable":false },
+                //{
+                //          "render": function (data, type, full, meta)
+                //          { return '<a class="btn btn-info" href="/Demo/Edit/' + full.Userid + '">Edit</a>'; }
+                //},
+                //       //{
+                       //    data: null, render: function (data, type, row) 
+                       //       { return "<a href='#' class='btn btn-danger' onclick=OnDeleteClick("+  data.Userid +"); >Delete</a>" ;}
+                           
+                       //},
+
+            ]
+        });
+
+
+        // function to clear the previous timer and set new timer for filter column keyup event to execute.
+        var delay = (function () {
+            var timer = 0;
+            return function (callback, ms) {
+                clearTimeout(timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+
+
+        // script for column filter Keyup event and here I have created half second(500) delay using the timer. You can increase depends on your requirement.
+        grid.columns().eq(0).each(function (colIdx) {
+            $('input', $('.filters th')[colIdx]).bind('keyup', function () {
+                var coltext = this.value; // typed value in the search column
+                var colindex = colIdx; // column index
+                delay(function () {
+                    grid
+                        .column(colindex)
+                        .search(coltext)
+                        .draw();
+                }, 500);
+            });
+        })
+
+          // script for column filter Keyup event and here I have created half second(500) delay using the timer. You can increase depends on your requirement.
+        grid.columns().eq(0).each(function (colIdx) {
+            debugger
+            $('input', $('.filters th')[colIdx]).bind('dp.change', function () {
+                var coltext = this.value; // typed value in the search column
+                var colindex = colIdx; // column index
+                delay(function () {
+                    grid
+                        .column(colindex)
+                        .search(coltext)
+                        .draw();
+                }, 500);
+            });
+        })   
+
+        
+    });
+    function OnDeleteClick(Id) {
+        var isConfirm = confirm("are your sure to delete this record");
+        if (isConfirm) {
+            $.ajax({
+                type: "POST",
+                url: "/Home/DeleteRecord",
+                data: {
+                    Id: Id
+                },
+                success: function (response) {
+                    if (response.status) {
+                       
+                        var  datatbale_name= $("#myTable").DataTable() ;
+                        //datatbale_name.ajax.reload(null, false )
+                        datatbale_name.draw(false);
+                    } else {
+                        alert();
+                    }
+                }
+            });
+        }
+   
+}
+
+    function CompaniesDDlEvent() {
+        debugger
+        let selectedOptions = $("#franchise_stddl").find('option:selected');
+        let companies = [];
+        //unselect all items in grid if selected.
+        //Family.InitSelections();
+
+        $(selectedOptions).each(function (index, selected) {
+            companies.push([$(this).val()]);
+        });
+
+        $('#myTable').DataTable().ajax.url('/Home/List?franchiseIds=' + companies).load();
+
+    };
+
+           $('.readonly').keypress(function(e) {
+    e.preventDefault();
+           });
+
+
+</script>

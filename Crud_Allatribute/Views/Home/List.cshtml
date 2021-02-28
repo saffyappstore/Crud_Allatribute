@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Crud_Allatribute.ProfileViewModel>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+<style>
+    .table td{
+  position:relative;
+}
+</style>
+<p>
+    @Html.ActionLink("Create New", "UserProfile")
+</p>
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+           
+           
+        </tr>
+
+    </thead>
+    <tbody>
+        @*@foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Userid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsCsharp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsJava)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "UserProfile", new { id = item.Userid }) |
+                    @Html.ActionLink("List", "Home", new { id = item.Userid }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Userid })
+                </td>
+            </tr>
+        }*@
+    </tbody>
+
+
+</table>
+<script>
+   
+    $(document).ready(function () {
+      
+            $("#myTable").DataTable({
+
+                "processing": true, // for show progress bar
+                "serverSide": true, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 5,
+
+                "ajax": {
+                    "url": "/Home/List",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+
+
+                "columns": [
+                      { "data": "CustomerID", "name": "CustomerID", "autoWidth": true },
+                      { "data": "Email", "name": "Email", "autoWidth": true },
+                      { "data": "ContactName", "title": "ContactName", "name": "ContactName", "autoWidth": true },
+                      //{ "data": "ContactTitle", "name": "ContactTitle", "autoWidth": true },
+                      //{ "data": "City", "name": "City", "autoWidth": true },
+                      //{ "data": "PostalCode", "name": "PostalCode", "autoWidth": true },
+                      //{ "data": "Country", "name": "Country", "autoWidth": true },
+                      //{ "data": "Phone", "name": "Phone", "title": "Status", "autoWidth": true },
+                      {
+                          "render": function (data, type, full, meta)
+                          { return '<a class="btn btn-info" href="/Demo/Edit/' + full.CustomerID + '">Edit</a>'; }
+                      },
+                       {
+                           data: null, render: function (data, type, row) 
+                              { return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.CustomerID + "'); >Delete</a>" ;}
+                           
+                       },
+                                          ]
+                                          });
+                                          });
+    </script>  
